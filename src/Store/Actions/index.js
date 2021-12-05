@@ -1,4 +1,4 @@
-import BlogApi from "../../BlogApi"
+import axios from "axios"
 
 export const getData = () => {
 	return async () => {
@@ -41,13 +41,16 @@ export const loginUser = (data) => {
 }
 export const CreateBlog = (data) => {
 	return async () => {
-		const image = await BlogApi.post("/createblog/uploadimage", data.image, {
+		const token = localStorage.getItem('token')
+		const image = await axios.post(`${process.env.REACT_APP_BASE_URL}/createblog/uploadimage`, data.image, {
 			headers: {
 				"Content-Type": "application/json",
 				"content-type": "multipart/form-data",
+				'x-access-token':token
 			}
 		})
-		const blogData = await BlogApi.post("/createblog", { image: image.data.image, ...data.blogdata })
+		console.log(image , "imgimgimgimgimgmiig")
+		const blogData = await axios.post(`${process.env.REACT_APP_BASE_URL}/createblog`, { image: image.data.image, ...data.blogdata })
 		console.log(blogData.data, "mmoisgere")
 		return ({
 			type: "CREATE_BLOG",

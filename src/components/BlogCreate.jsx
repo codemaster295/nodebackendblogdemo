@@ -1,27 +1,24 @@
 import React from 'react'
-import { Alert, Col, Form, Row } from 'react-bootstrap'
+// import { Alert, Col, Form, Row ,Button } from 'react-bootstrap'
 import { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getData, DeletePost, loginUser, CreateBlog } from '../Store/Actions'
-import Button from '@restart/ui/esm/Button';
 import { Upload } from 'antd';
 import 'antd/dist/antd.css';
 import ImgCrop from 'antd-img-crop';
+import { Container, Grid } from '@mui/material';
 
 
 
 
 const BlogCreate = () => {
-	const userDataRedux = useSelector((state) => state);
-	const dispatch = useDispatch()
-
 	const [blogTitle, setBlogTitle] = useState("")
 	const [blogDescription, setBlogDescription] = useState("")
-	const [password, setPassword] = useState(null)
-	const [checked, setChecked] = useState(false)
 	const [error, setError] = useState("")
 	const [fileList, setFileList] = useState([])
-
+	const userDataRedux = useSelector((state) => state);
+	const dispatch = useDispatch()
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		let formData = new FormData();
@@ -53,39 +50,26 @@ const BlogCreate = () => {
 		}, 0)
 	}
 	return (
-		<div>
-			<Form onSubmit={handleSubmit}>
-				<Form.Group className="mb-3" controlId="formBasicEmail">
-					<Form.Label>Blog Title</Form.Label>
-					<Form.Control onChange={(e) => { setBlogTitle(e.target.value) }} type="text" placeholder="Enter The Title" />
-				</Form.Group>
-				<ImgCrop rotate aspect={2 / 1}>
+	
+
+			<form onSubmit={handleSubmit}>
+			
+				<ImgCrop rotate aspect={16 / 9}>
 					<Upload
 						multiple={false}
 						customRequest={dummyRequest}
 						listType="picture-card"
 						onChange={onChange}
 						onPreview={onPreview}
-
 					>
-						{fileList.length < 5 && '+ Upload'}
+						{fileList.length < 1 && '+ Upload'}
 					</Upload>
 				</ImgCrop>
-				<Form.Group className="mb-3" controlId="formBasicPassword">
-					<Form.Label>Password</Form.Label>
-					<Form.Control type="text" onChange={(e) => { setBlogDescription(e.target.value) }} placeholder="Description" />
-				</Form.Group>
-				{/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-					<Form.Check type="checkbox" onChange={(e) => { setChecked(e.target.checked) }} label="I agree to terms and conditions" />
-				</Form.Group> */}
-				{/* <Alert show={error} variant="danger">
-					{error ? error : ""}
-				</Alert> */}
-				<Button variant="primary" type="submit">
+				<button variant="primary" type="submit">
 					Submit
-				</Button>
-			</Form>
-		</div>
+				</button>
+				</form>
+				
 	)
 }
 

@@ -3,7 +3,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getData, DeletePost, loginUser } from './Store/Actions'
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCreate from "./components/BlogCreate";
@@ -54,19 +54,22 @@ function App(props) {
       console.log(data.payload, "mmop")
     })
   }, [])
+  const token = localStorage.getItem('token')
   const handleSubmit = () => {
     let formData = new FormData();
     // data.append('name', 'Image Upload');
     console.log("emailemailemail", email)
     formData.append('image', email);
-    axios.post('http://localhost:5050/api/v1/createblog', formData, {
-      headers: {
-        "Content-Type": "application/json",
-        "content-type": "multipart/form-data",
-      }
-    }).then(data => console.log(data))
-    console.log(email)
+    // axios.post('http://localhost:5050/api/v1/createblog', formData, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "content-type": "multipart/form-data",
+    //     'x-access-token':token
+    //   }
+    // }).then(data => console.log(data))
+    console.log(token)
   }
+
   return (
     <Router>
       <Routes>
